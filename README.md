@@ -59,6 +59,7 @@ delete bucketlist item
 - `DELETE` - `127.0.0.1:5000/bucketlists/<id>/items/<id>`
 
 **[#Tests](url)**
+
 <img width="723" alt="screen shot 2017-01-27 at 7 57 29 am" src="https://cloud.githubusercontent.com/assets/8224798/22361045/e6c6a506-e466-11e6-914c-60fb57207741.png">
 
 
