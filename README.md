@@ -8,18 +8,16 @@ flask web service application which manages bucketlists. It always for multiple 
 **[# Installation](url)**
 
 1. Clone the repo on github
-
-`https://github.com/kjagoo/Bucketlist`
-
+   - `https://github.com/kjagoo/Bucketlist`
+   
 2. Install requirements
-
-`pip install -r requirements.txt`
-
+   - `pip install -r requirements.txt`
+   
 3. Create database bucketlist 
-   -  edit in `manage.py` `postgresql+psycopg2://[username]:[password]@localhost:5432/bucketlist`
+   - edit in `manage.py` `postgresql+psycopg2://[username]:[password]@localhost:5432/bucketlist`
    - `createdb bucketlist`
-   -  `python manage.py db init`
-   -  `python manage.py db migrate`
+   - `python manage.py db init`
+   - `python manage.py db migrate`
 
 
 **[Running the Program](url)**
