@@ -1,27 +1,30 @@
 # Bucketlist
-flask web service application
+flask web service application which manages bucketlists. It always for multiple users where each user can only manage and view his/hers bucketlists. It implements token based authentication to manage security.
 
 # Requirements
 - Postgres Database
-- python flask api
+- Python Flask api
 
 **[# Installation](url)**
 
-Clone the repo on github
+1. Clone the repo on github
 
 `https://github.com/kjagoo/Bucketlist`
 
-
-Install requirements
+2. Install requirements
 
 `pip install -r requirements.txt`
+
+3. Create database bucketlist 
+   -  edit in `manage.py` `postgresql+psycopg2://[username]:[password]@localhost:5432/bucketlist`
+   - `createdb bucketlist`
+   -  `python manage.py db init`
+   -  `python manage.py db migrate`
+
 
 **[Running the Program](url)**
 
 `python run.py`
-
-- check tests to confirm every is alright
-<img width="723" alt="screen shot 2017-01-27 at 7 57 29 am" src="https://cloud.githubusercontent.com/assets/8224798/22361045/e6c6a506-e466-11e6-914c-60fb57207741.png">
 
 **[Usage Routes](url)**
 
