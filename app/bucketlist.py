@@ -115,9 +115,9 @@ class BucketItemsAdd(Resource):
 
     def post(self, id):
         """ Add a new item to a bucket list """
-        bucketlistitem = BucketListItems.query.get(id)
-        if bucketlistitem:
-            if bucketlistitem.created_by == g.user.id:
+        bucket= Bucket.query.get(id)
+        if bucket:
+            if bucket.created_by == g.user.id:
                 parser = reqparse.RequestParser()
                 parser.add_argument("title",
                                     required=True,
@@ -127,7 +127,7 @@ class BucketItemsAdd(Resource):
                 title, description = args["title"], args["description"]
                 item = BucketListItems(title=title,
                                        description=description,
-                                       bucketlist_id=id,
+                                       bucket_id=id,
                                        created_by=g.user.id)
                 return add_item(name="title",
                                 item=item,
@@ -138,7 +138,7 @@ class BucketItemsAdd(Resource):
             else:
                 return unauthorized()
         else:
-            return unauthorized("Error: The bucket list Item does not exist.")
+            return unauthorized("empty")
 
 
 class BucketItemsGetPutDel(Resource):
