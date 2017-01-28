@@ -3,7 +3,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
+
 from . import db, app
+
+migrate = Migrate(app, db)
+manager = Manager(app)
+
+manager.add_command('db', MigrateCommand)
 
 
 # Create the Post Class
@@ -13,7 +21,7 @@ class Bucket(db.Model):
     __tablename__ = "bucket"
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(70))
+    title = db.Column(db.String(70), unique=True)
     description = db.Column(db.Text)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     date_modified = db.Column(db.DateTime, onupdate=datetime.utcnow)
@@ -21,19 +29,19 @@ class Bucket(db.Model):
     user = db.relationship("Users", backref=db.backref("users", lazy="dynamic"))
 
     items = db.relationship("BucketListItems",
-                            backref=db.backref("bucket"), lazy="dynamic")
+                            backref=db.backref("items"), lazy="select")
 
     def __repr__(self):
         return "<Bucketlist: %r>" % self.title
 
 
 class BucketListItems(db.Model):
-    """ Creates items item """
+    """ Creates bucketlist items """
 
     __tablename__ = "bucketlistitems"
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(70))
+    title = db.Column(db.String(70), unique=True)
     description = db.Column(db.Text)
     done = db.Column(db.Boolean, default=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
@@ -41,8 +49,6 @@ class BucketListItems(db.Model):
                               onupdate=datetime.utcnow)
 
     created_by = db.Column(db.Integer, db.ForeignKey("users.id"))
-    user = db.relationship("Users",
-                           backref=db.backref("bucketlistitem", lazy="dynamic"))
 
     bucket_id = db.Column(db.Integer, db.ForeignKey("bucket.id"))
 
@@ -50,14 +56,12 @@ class BucketListItems(db.Model):
         return "<Bucketlist Item: %r>" % self.title
 
 class Users(db.Model):
-    """
-    Users
-    """
+    """   Users   """
     __tablename__="users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255))
     password_hash = db.Column(db.String(128))
-    email = db.Column(db.String(128))
+    email = db.Column(db.String(128), unique=True)
 
     @property
     def password(self):
@@ -77,7 +81,7 @@ class Users(db.Model):
         """Generating an authentication token that expires in 20 minutes"""
         serializer = Serializer(app.config["SECRET_KEY"],
                                 expires_in=expiration)
-        return serializer.dumps({"id": self.id})
+        return serializer.dumps({"email": self.email, "username": self.username})
 
     @staticmethod
     def verify_auth_token(token):
@@ -90,8 +94,13 @@ class Users(db.Model):
         except BadSignature:
             """When token is invalid """
             return None
-        user = Users.query.get(data["id"])
+
+        user = Users.query.filter_by(email=data["email"]).first()
         return user
 
     def __repr__(self):
         return "<User: %r>" % self.username
+
+
+if __name__ == '__main__':
+    manager.run()
