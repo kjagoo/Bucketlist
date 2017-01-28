@@ -80,9 +80,15 @@ def add_item(**kwargs):
             item_type = "bucket list"
         elif kwargs["is_item"]:
             item_type = "bucket list item"
+        if kwargs["is_user"]:
+            user = Users.query.filter_by(username=kwargs["item"].username).first()
+            token = user.generate_auth_token()
+            message = {"message": "Successfully added " +
+                       item_type + ".", "token": token.decode("ascii")}
+        else:
+            message = {"message": "Successfully added " +
+                       item_type + "."}
 
-        message = {"message": "Successfully added " +
-                   item_type + "."}
         response = marshal(kwargs["item"], kwargs["serializer"])
         response.update(message)
         return response, 201
@@ -90,8 +96,7 @@ def add_item(**kwargs):
     except IntegrityError:
         """When adding an item that already exists"""
         db.session.rollback()
-        return {"error": "The " + kwargs["name"] +
-                " that you tried to enter already exists."}
+        return {"error": "The " + kwargs["name"] + " already exists."}
 
 
 def delete_item(item, name, **kwargs):
