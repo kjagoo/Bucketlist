@@ -20,11 +20,11 @@ flask web service application which manages bucketlists. It always for multiple 
    - `python manage.py db migrate`
 
 
-**[Running the Program](url)**
+**[#Running the Program](url)**
 
 `python run.py`
 
-**[Usage Routes](url)**
+**[#Usage Routes](url)**
 
 register new user
 - `POST` - `127.0.0.1:5000/auth/register/`
@@ -61,6 +61,13 @@ delete bucketlist item
 
 **[#Tests](url)**
 
+setup test environment by :
+   - edit in `testmanage.py` `postgresql+psycopg2://[username]:[password]@localhost:5432/testbucketlist`
+   - `createdb testbucketlist`
+   - `python testmanage.py db init`
+   - `python testmanage.py db migrate`
+   - `python testmanage.py db upgrade`
+   
 <img width="723" alt="screen shot 2017-01-27 at 7 57 29 am" src="https://cloud.githubusercontent.com/assets/8224798/22361045/e6c6a506-e466-11e6-914c-60fb57207741.png">
 
 
