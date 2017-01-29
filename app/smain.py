@@ -80,6 +80,7 @@ def add_item(**kwargs):
             item_type = "bucket list"
         elif kwargs["is_item"]:
             item_type = "bucket list item"
+        # include token on registration
         if kwargs["is_user"]:
             user = Users.query.filter_by(username=kwargs["item"].username).first()
             token = user.generate_auth_token()
