@@ -24,7 +24,7 @@ class TestingConfig(Config):
 
     DEBUG = True
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://joshuakagenyi:#@joshua2016@localhost:5432/bucketlist'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://joshuakagenyi:#@joshua2016@localhost:5432/testbucketlist'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = "p9Bv<3Eid9%$i01"
 
