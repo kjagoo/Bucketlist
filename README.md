@@ -67,6 +67,7 @@ setup test environment by :
    - `python testmanage.py db init`
    - `python testmanage.py db migrate`
    - `python testmanage.py db upgrade`
+   - `python testmanage.py seed`
    
 <img width="723" alt="screen shot 2017-01-27 at 7 57 29 am" src="https://cloud.githubusercontent.com/assets/8224798/22361045/e6c6a506-e466-11e6-914c-60fb57207741.png">
 
