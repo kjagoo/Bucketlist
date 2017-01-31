@@ -6,7 +6,8 @@ bucket_item_inputs = {
     "description": fields.String,
     "done": fields.Boolean,
     "date_created": fields.DateTime(dt_format='rfc822'),
-    "date_modified": fields.DateTime(dt_format='rfc822')
+    "date_modified": fields.DateTime(dt_format='rfc822'),
+    "bucket_id": fields.String
 }
 
 bucket_inputs = {
