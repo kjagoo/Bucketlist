@@ -25,7 +25,7 @@ class TestBase(TestCase):
     def setUp(self):
         """ Create test database and set up test client """
         self.app = app.test_client()
-        
+
     def test_index(self):
         """ Test response to the index route """
         response = self.app.get("/")

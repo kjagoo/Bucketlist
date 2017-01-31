@@ -1,4 +1,5 @@
 import os
+import env_variables
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
@@ -6,7 +7,8 @@ class Config(object):
 
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://joshuakagenyi:#@joshua2016@localhost:5432/bucketlist'
+    print (os.environ['PRODUCTIONDB'])
+    SQLALCHEMY_DATABASE_URI = os.environ['PRODUCTIONDB']
     SECRET_KEY = "p9Bv<3Eid9%$i01"
 
 class DevelopmentConfig(Config):
@@ -14,7 +16,7 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://joshuakagenyi:#@joshua2016@localhost:5432/bucketlist'
+    SQLALCHEMY_DATABASE_URI = os.environ['DEVELOPMENTDB']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = "p9Bv<3Eid9%$i01"
 
@@ -24,7 +26,7 @@ class TestingConfig(Config):
 
     DEBUG = True
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://joshuakagenyi:#@joshua2016@localhost:5432/testbucketlist'
+    SQLALCHEMY_DATABASE_URI = os.environ['TESTDB']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = "p9Bv<3Eid9%$i01"
 
@@ -34,7 +36,7 @@ class ProductionConfig(Config):
 
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://joshuakagenyi:#@joshua2016@localhost:5432/bucketlist'
+    SQLALCHEMY_DATABASE_URI = os.environ['PRODUCTIONDB']
 
 app_config = {
     "development": DevelopmentConfig,

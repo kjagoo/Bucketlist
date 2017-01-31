@@ -8,7 +8,7 @@ db = SQLAlchemy()
 
 def create_app(configuration):
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://joshuakagenyi:#@joshua2016@localhost:5432/bucketlist'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['PRODUCTIONDB']
     app.config.from_object(app_config[configuration])
     db.init_app(app)
 
