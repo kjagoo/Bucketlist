@@ -1,6 +1,8 @@
 import json
 from . import TestBase
 from datetime import datetime
+import os
+import env_variables
 
 class TestBucketlists(TestBase):
     """ Test operations on bucket lists """
@@ -11,6 +13,7 @@ class TestBucketlists(TestBase):
         response = self.app.post("/auth/login/", data=self.user)
         output = json.loads(response.data.decode('utf-8'))
         token = output.get("token").encode("ascii")
+        self.token = token
         return {"token": token}
 
     def test_no_token(self):
@@ -55,6 +58,18 @@ class TestBucketlists(TestBase):
         print (response.data)
         self.assertTrue("The title already exists" in output["error"])
 
+    def test_delete_bucketlist(self):
+        """ Test delete bucket lists """
+        response = self.app.delete("/bucketlists/3", headers=self.get_token())
+        output = json.loads(response.data.decode('utf-8'))
+        if response.status_code == 403:
+            self.assertIn("Error: The bucket list doesn't exist.", output["message"])
+        else:
+            self.assertEqual(response.status_code, 200)
+
+
+            self.assertIn("Successfully deleted bucket list", output["message"])
+
 
     def test_edit_bucketlist(self):
         """ Test updating of bucket lists """
@@ -72,11 +87,11 @@ class TestBucketlists(TestBase):
     def test_get_bucketlist_id(self):
         """ Test that specified ID bucket list is displayed """
         # Get bucket list whose ID is 1
-        response = self.app.get("/bucketlists/1",
+        response = self.app.get("/bucketlists/2",
                                 headers=self.get_token())
         self.assertEqual(response.status_code, 200)
         bucketlist1 = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(bucketlist1.get("title"), "cooking plans 2017")
+        self.assertEqual(bucketlist1.get("title"), "Hackerthorns")
 
     def test_get_invalid_bucketlist_id(self):
         """ Test error raised on invalid bucketlist ID """
@@ -117,17 +132,6 @@ class TestBucketlists(TestBase):
         self.assertEqual(response.status_code, 200)
         output = json.loads(response.data.decode('utf-8'))
         output = output["bucketlists"]
-        bucketlist1 = output[0]
-        bucketlist2 = output[1]
+
         # bucket lists are displayed
-        self.assertEqual(bucketlist2.get("title"), "cooking plans 2017")
-        self.assertEqual(bucketlist1.get("title"), "Hackerthorns")
-
-
-    def test_delete_bucketlist(self):
-        """ Test delete bucket lists """
-        response = self.app.delete("/bucketlists/3", headers=self.get_token())
-        self.assertEqual(response.status_code, 200)
-        output = json.loads(response.data.decode('utf-8'))
-
-        self.assertIn("Successfully deleted bucket list", output["message"])
+        self.assertTrue(any(d['title'] == 'Hackerthorns' for d in output))
