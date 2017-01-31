@@ -19,7 +19,6 @@ class Buckets(Resource):
         search = args.get("q")
         kwargs = {"created_by": g.user.id}
 
-        error_message = {"message": "Bucket Lists Empty"}
         if search:
             kwargs.update({"title": search})
             error_message = {"message": "The bucketlist '" + search +
@@ -50,6 +49,11 @@ class Buckets(Resource):
                   "previous_pagea": previous_page,
                   "next_page": next_page
                   }
+        error_message = {"bucketlists": {"message": "Bucket Lists are Empty"},
+                         "has_next_page": has_next_page,
+                         "total_pages": total_pages,
+                         "previous_pagea": previous_page,
+                         "next_page": next_page}
 
         if bucketlists:
             return output
