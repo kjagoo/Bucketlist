@@ -21,7 +21,7 @@ class UserRegister(Resource):
         args = parser.parse_args()
         is_valid = validate_email(args["email"])
         if not is_valid:
-            return {"Error": "Insert valid email address"}
+            return unauthorized("Error: Insert valid email address")
         username, password, email = args[
             "username"], args["password"], args["email"]
         user = Users(username=username, password=password, email=email)
