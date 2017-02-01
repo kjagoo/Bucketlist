@@ -9,11 +9,15 @@ class TestAuth(TestBase):
         self.user = {"username": "testuser2", "password": "testpassword",
                      "email":"test@test.com"}
         response = self.app.post("/auth/register/", data=self.user)
-        self.assertEqual(response.status_code, 201)
-
-        output = json.loads(response.data.decode('utf-8'))
-        self.assertIn("Successfully added user", output["message"])
-        self.assertIn(self.user["username"], response.data.decode('utf-8'))
+        if response.status_code == 201:
+            self.assertEqual(response.status_code, 201)
+            output = json.loads(response.data.decode('utf-8'))
+            self.assertIn("Successfully added user", output["message"])
+            self.assertIn(self.user["username"], response.data.decode('utf-8'))
+        elif response.status_code == 200:
+            output = json.loads(response.data.decode('utf-8'))
+            print (output)
+            self.assertIn('The username already exists.', output["error"])
 
     def test_login(self):
         """ Test user login """
