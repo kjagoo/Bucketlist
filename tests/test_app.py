@@ -1,8 +1,7 @@
 import json
 from . import TestBase
 from datetime import datetime
-import os
-import env_variables
+
 
 class TestBucketlists(TestBase):
     """ Test operations on bucket lists """
@@ -117,7 +116,8 @@ class TestBucketlists(TestBase):
 
         self.assertEqual(response.status_code, 200)
         output = json.loads(response.data.decode('utf-8'))
-        self.assertTrue("Bucket Lists Empty" in output["message"])
+
+        self.assertIn("Bucket Lists are Empty", output["bucketlists"][0]["message"])
 
         # Attempt to get another user's bucket list
         response = self.app.get("/bucketlists/1", headers=token)

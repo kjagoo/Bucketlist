@@ -49,7 +49,7 @@ class Buckets(Resource):
                   "previous_pagea": previous_page,
                   "next_page": next_page
                   }
-        error_message = {"bucketlists": {"message": "Bucket Lists are Empty"},
+        error_message = {"bucketlists": [{"message": "Bucket Lists are Empty"}],
                          "has_next_page": has_next_page,
                          "total_pages": total_pages,
                          "previous_pagea": previous_page,
