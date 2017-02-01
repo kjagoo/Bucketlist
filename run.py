@@ -1,6 +1,6 @@
 from app.smain import Index
 from app.auth import Login, UserRegister
-from app.bucketlist import Buckets, BucketsId,BucketItemsAdd, BucketItemsGetPutDel
+from app.bucketlist import Buckets, BucketsId, BucketItemsAdd, BucketItemsGetPutDel
 from app import api, app
 
 """ Defining the API endpoints """

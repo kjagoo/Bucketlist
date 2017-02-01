@@ -26,7 +26,8 @@ class Bucket(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     date_modified = db.Column(db.DateTime, onupdate=datetime.utcnow)
     created_by = db.Column(db.Integer, db.ForeignKey("users.id"))
-    user = db.relationship("Users", backref=db.backref("users", lazy="dynamic"))
+    user = db.relationship(
+        "Users", backref=db.backref("users", lazy="dynamic"))
 
     items = db.relationship("BucketListItems",
                             backref=db.backref("items"), lazy="select")
@@ -55,9 +56,10 @@ class BucketListItems(db.Model):
     def __repr__(self):
         return "<Bucketlist Item: %r>" % self.title
 
+
 class Users(db.Model):
     """   Users   """
-    __tablename__="users"
+    __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255))
     password_hash = db.Column(db.String(128))
@@ -81,7 +83,8 @@ class Users(db.Model):
         """Generating an authentication token that expires in 20 minutes"""
         serializer = Serializer(app.config["SECRET_KEY"],
                                 expires_in=expiration)
-        return serializer.dumps({"email": self.email, "username": self.username})
+        return serializer.dumps({"email": self.email,
+                                 "username": self.username})
 
     @staticmethod
     def verify_auth_token(token):

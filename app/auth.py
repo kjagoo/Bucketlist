@@ -5,6 +5,7 @@ from .model import Users
 from .smain import unauthorized, add_item
 from validate_email import validate_email
 
+
 class UserRegister(Resource):
     """Register a new user.  URL: /auth/register/   Request method: POST"""
 
@@ -20,8 +21,9 @@ class UserRegister(Resource):
         args = parser.parse_args()
         is_valid = validate_email(args["email"])
         if not is_valid:
-            return {"Error":"Insert valid email address"}
-        username, password, email = args["username"], args["password"], args["email"]
+            return {"Error": "Insert valid email address"}
+        username, password, email = args[
+            "username"], args["password"], args["email"]
         user = Users(username=username, password=password, email=email)
         return add_item(name="username",
                         item=user,

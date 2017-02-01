@@ -1,13 +1,14 @@
 import json
 from tests import TestBase
 
+
 class TestAuth(TestBase):
     """ Test user registration and login """
 
     def test_user_register(self):
         """ Test user registration """
         self.user = {"username": "testuser2", "password": "testpassword",
-                     "email":"test@test.com"}
+                     "email": "test@test.com"}
         response = self.app.post("/auth/register/", data=self.user)
         if response.status_code == 201:
             self.assertEqual(response.status_code, 201)
@@ -43,4 +44,5 @@ class TestAuth(TestBase):
         self.assertEqual(response.status_code, 403)
 
         output = json.loads(response.data.decode('utf-8'))
-        self.assertIn("Error: Invalid username and/or password.", output["message"])
+        self.assertIn("Error: Invalid username and/or password.",
+                      output["message"])

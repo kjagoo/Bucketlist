@@ -1,15 +1,15 @@
 import os
 import env_variables
-basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 class Config(object):
     """ Default configurations """
 
     DEBUG = False
     TESTING = False
-    print (os.environ['PRODUCTIONDB'])
     SQLALCHEMY_DATABASE_URI = os.environ['PRODUCTIONDB']
     SECRET_KEY = "p9Bv<3Eid9%$i01"
+
 
 class DevelopmentConfig(Config):
     """ Development configurations """
@@ -37,6 +37,7 @@ class ProductionConfig(Config):
     DEBUG = False
     TESTING = False
     SQLALCHEMY_DATABASE_URI = os.environ['PRODUCTIONDB']
+
 
 app_config = {
     "development": DevelopmentConfig,

@@ -13,5 +13,6 @@ def create_app(configuration):
 
     return app
 
+
 app = create_app("development")
 api = Api(app=app)

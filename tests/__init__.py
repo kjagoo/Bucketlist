@@ -2,10 +2,8 @@ from run import app
 import os
 from app.config_bucket import app_config
 from flask_testing import TestCase
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database, drop_database
-import sys
 import json
 import nose
 from app.model import db, Users, Bucket, BucketListItems
@@ -30,7 +28,8 @@ class TestBase(TestCase):
             Bucket()
             BucketListItems()
             db.create_all()
-            user = Users(username="joshua", password="joshua", email="kagenyi2@gmail.com")
+            user = Users(username="joshua", password="joshua",
+                         email="kagenyi2@gmail.com")
             bucketlist1 = Bucket(title="Knowledge Goals",
                                  description="Things to learn",
                                  created_by=1)
@@ -38,11 +37,13 @@ class TestBase(TestCase):
                                  description="Awesome tours to go on",
                                  created_by=1)
             item1 = BucketListItems(title="Learn to Cook",
-                                    description="Cook at least 10 different meals",
+                                    description="Cook at least 10"
+                                    " different meals",
                                     created_by=1,
                                     bucket_id=1)
             item2 = BucketListItems(title="Swim with Dolphins",
-                                    description="Go swimming with dolphins in Watamu",
+                                    description="Go swimming with"
+                                    " dolphins in Watamu",
                                     created_by=1,
                                     bucket_id=1)
 
@@ -52,7 +53,6 @@ class TestBase(TestCase):
             db.session.add(item1)
             db.session.add(item2)
             db.session.commit()
-
 
     def test_index(self):
         """ Test response to the index route """
@@ -68,8 +68,6 @@ class TestBase(TestCase):
         """ Destroy test database """
         # engine = drop_database(os.environ['TESTDB'])
         # drop_database(engine.url)
-
-
 
 
 if __name__ == "__main__":

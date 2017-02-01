@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
@@ -13,6 +14,7 @@ def create_app(configuration):
     db.init_app(app)
 
     return app
+
 
 app = create_app("development")
 api = Api(app=app, prefix="/")

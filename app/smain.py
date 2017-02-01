@@ -47,7 +47,8 @@ def before_request():
     """  Validates token.
     Ran before requests apart from user registration, login and index.
     """
-    if request.endpoint and request.endpoint not in ["login", "userregister", "index"]:
+    if request.endpoint and request.endpoint not in ["login", "userregister",
+                                                     "index"]:
         token = request.headers.get("token")
         if token is not None:
             user = Users.verify_auth_token(token)
@@ -82,7 +83,8 @@ def add_item(**kwargs):
             item_type = "bucket list item"
         # include token on registration
         if kwargs["is_user"]:
-            user = Users.query.filter_by(username=kwargs["item"].username).first()
+            user = Users.query.filter_by(
+                username=kwargs["item"].username).first()
             token = user.generate_auth_token()
             message = {"message": "Successfully added " +
                        item_type + ".", "token": token.decode("ascii")}
@@ -117,7 +119,8 @@ def delete_item(item, name, **kwargs):
             item_type = "bucket list"
         elif kwargs["is_item"]:
             item_type = "bucket list item"
-        return {"message": "Successfully deleted " + item_type + ": '" + name + "'."}
+        return {"message": "Successfully deleted " + item_type + ": '" +
+                name + "'."}
     else:
         return {"message": "Delete was unsuccessful. Please try again!"}
 
@@ -154,6 +157,6 @@ class Index(Resource):
     def get(self):
         """ Return a welcome message """
         return {"message": "Welcome to the Bucket List API."
-                                  " You can get started by :"
-                                  "1. Login "
-                                  "2. Register a new user "}
+                " You can get started by :"
+                "1. Login "
+                "2. Register a new user "}

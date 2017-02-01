@@ -3,7 +3,8 @@ from flask_restful import Resource, marshal
 from flask_restful import reqparse
 from .inputfields import bucket_item_inputs, bucket_inputs
 from .model import BucketListItems, Bucket
-from .smain import unauthorized, add_item, delete_item, edit_item, authorized_user_bucketlist, authorized_user_item
+from .smain import unauthorized, add_item, delete_item, edit_item
+from .smain import authorized_user_bucketlist, authorized_user_item
 from .config_bucket import Config
 
 
@@ -24,9 +25,10 @@ class Buckets(Resource):
             error_message = {"message": "The bucketlist '" + search +
                              "' does not exist."}
 
-        bucketlists = Bucket.query.filter_by(**kwargs).paginate(page=page,
-                                                                per_page=limit,
-                                                                error_out=False)
+        bucketlists = Bucket.query.filter_by(**kwargs
+                                             ).paginate(page=page,
+                                                        per_page=limit,
+                                                        error_out=False)
         total_pages = bucketlists.pages
         has_next_page = bucketlists.has_next
         has_previous_page = bucketlists.has_prev
@@ -49,7 +51,8 @@ class Buckets(Resource):
                   "previous_pagea": previous_page,
                   "next_page": next_page
                   }
-        error_message = {"bucketlists": [{"message": "Bucket Lists are Empty"}],
+        error_message = {"bucketlists": [{"message":
+                                          "Bucket Lists are Empty"}],
                          "has_next_page": has_next_page,
                          "total_pages": total_pages,
                          "previous_pagea": previous_page,
@@ -114,12 +117,13 @@ class BucketsId(Resource):
                            is_bucket=True,
                            is_item=False)
 
+
 class BucketItemsAdd(Resource):
     """ URL: /bucketlists/<id>/items/   Request methods: GET, POST """
 
     def post(self, id):
         """ Add a new item to a bucket list """
-        bucket= Bucket.query.get(id)
+        bucket = Bucket.query.get(id)
         if bucket:
             if bucket.created_by == g.user.id:
                 parser = reqparse.RequestParser()

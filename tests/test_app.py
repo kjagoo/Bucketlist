@@ -18,16 +18,19 @@ class TestBucketlists(TestBase):
     def test_no_token(self):
         """ Test that users must provide a token to make responses """
         self.bucketlist = {"title": "2017 December Holiday",
-                           "description": "things i want to do in december holiday 2017"}
+                           "description":
+                           "things i want to do in december holiday 2017"}
         response = self.app.post("/bucketlists/", data=self.bucketlist)
         self.assertEqual(response.status_code, 401)
         output = json.loads(response.data.decode('utf-8'))
-        self.assertIn("Error: Authentication token not found!", output["message"])
+        self.assertIn("Error: Authentication token not found!",
+                      output["message"])
 
     def test_invalid_token(self):
         """ Test that invalid tokens cannot be used """
         self.bucketlist = {"title": "2017 December Holiday",
-                           "description": "things i want to do in december holiday 2017"}
+                           "description":
+                           "things i want to do in december holiday 2017"}
         invalid_token = {"token": 12345}
         response = self.app.post("/bucketlists/", data=self.bucketlist,
                                  headers=invalid_token)
@@ -37,21 +40,27 @@ class TestBucketlists(TestBase):
 
     def test_add_bucketlist(self):
         """ Test addition of bucket lists """
-        self.bucketlist = {"title": "2017 December Holiday " + str(datetime.now()),
-                           "description": "things i want to do in december holiday 2017"}
-        response = self.app.post("/bucketlists/", data=self.bucketlist, headers=self.get_token())
+        self.bucketlist = {"title": "2017 December Holiday " +
+                           str(datetime.now()),
+                           "description":
+                           "things i want to do in december holiday 2017"}
+        response = self.app.post(
+            "/bucketlists/", data=self.bucketlist, headers=self.get_token())
         self.assertEqual(response.status_code, 201)
         output = json.loads(response.data.decode('utf-8'))
         print (response.data)
         self.assertTrue("Successfully added bucket list" in output["message"])
         self.assertIn(self.bucketlist["title"], response.data.decode('utf-8'))
-        self.assertIn(self.bucketlist["description"], response.data.decode('utf-8'))
+        self.assertIn(self.bucketlist["description"],
+                      response.data.decode('utf-8'))
 
     def test_add_bucketlist_no_duplicates(self):
         """ Test addition of dublicate bucket lists is not allowed """
         self.bucketlist = {"title": "Hackerthorns",
-                           "description": "things i want to do in december holiday 2017"}
-        response = self.app.post("/bucketlists/", data=self.bucketlist, headers=self.get_token())
+                           "description":
+                           "things i want to do in december holiday 2017"}
+        response = self.app.post(
+            "/bucketlists/", data=self.bucketlist, headers=self.get_token())
         self.assertEqual(response.status_code, 200)
         output = json.loads(response.data.decode('utf-8'))
         print (response.data)
@@ -62,13 +71,13 @@ class TestBucketlists(TestBase):
         response = self.app.delete("/bucketlists/3", headers=self.get_token())
         output = json.loads(response.data.decode('utf-8'))
         if response.status_code == 403:
-            self.assertIn("Error: The bucket list doesn't exist.", output["message"])
+            self.assertIn("Error: The bucket list doesn't exist.",
+                          output["message"])
         else:
             self.assertEqual(response.status_code, 200)
 
-
-            self.assertIn("Successfully deleted bucket list", output["message"])
-
+            self.assertIn("Successfully deleted bucket list",
+                          output["message"])
 
     def test_edit_bucketlist(self):
         """ Test updating of bucket lists """
@@ -81,7 +90,8 @@ class TestBucketlists(TestBase):
         output = json.loads(response.data.decode('utf-8'))
         self.assertIn("Successfully updated bucket list.", output["message"])
         self.assertIn(self.bucketlist["title"], response.data.decode('utf-8'))
-        self.assertIn(self.bucketlist["description"], response.data.decode('utf-8'))
+        self.assertIn(self.bucketlist["description"],
+                      response.data.decode('utf-8'))
 
     def test_get_bucketlist_id(self):
         """ Test that specified ID bucket list is displayed """
@@ -98,7 +108,8 @@ class TestBucketlists(TestBase):
                                 headers=self.get_token())
         self.assertEqual(response.status_code, 403)
         output = json.loads(response.data.decode('utf-8'))
-        self.assertIn("Error: The bucket list doesn't exist.", output["message"])
+        self.assertIn("Error: The bucket list doesn't exist.",
+                      output["message"])
 
     def test_unauthorized_access(self):
         """ Test that users cannot access another user's bucket lists """
@@ -117,13 +128,15 @@ class TestBucketlists(TestBase):
         self.assertEqual(response.status_code, 200)
         output = json.loads(response.data.decode('utf-8'))
 
-        self.assertIn("Bucket Lists are Empty", output["bucketlists"][0]["message"])
+        self.assertIn("Bucket Lists are Empty", output[
+                      "bucketlists"][0]["message"])
 
         # Attempt to get another user's bucket list
         response = self.app.get("/bucketlists/1", headers=token)
         self.assertEqual(response.status_code, 403)
         output = json.loads(response.data.decode('utf-8'))
-        self.assertIn("Error: Restricted unauthorised access.", output["message"])
+        self.assertIn("Error: Restricted unauthorised access.",
+                      output["message"])
 
     def test_get_bucketlists(self):
         """ Test that all bucket lists are displayed """
