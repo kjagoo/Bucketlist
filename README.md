@@ -1,3 +1,57 @@
+# Bucketlist
+flask web service application which manages bucketlists. It always for multiple users where each user can only manage and view his/hers bucketlists. It implements token based authentication to manage security.
+
+# Requirements
+- Postgres Database
+- Python Flask api
+
+**[# Installation](url)**
+
+1. Clone the repo on github
+   - `https://github.com/kjagoo/Bucketlist`
+   
+2. Install requirements
+   - `pip install -r requirements.txt`
+   
+3. Create database bucketlist 
+   - edit in `manage.py` `postgresql+psycopg2://[username]:[password]@localhost:5432/bucketlist`
+   - `createdb bucketlist`
+   - `python manage.py db init`
+   - `python manage.py db migrate`
+
+
+**[#Running the Program](url)**
+
+`python run.py`
+
+**[#Usage Routes](url)**
+
+register new user
+- `POST` - `127.0.0.1:5000/auth/register/`
+
+login
+- `POST` - `127.0.0.1:5000/auth/login/`
+
+get list of all bucketslists
+- `GET` - `127.0.0.1:5000/bucketlists/`
+
+add a bucketlist
+- `POST` - `127.0.0.1:5000/bucketlists/`
+
+edit a bucketlist
+- `PUT` - `127.0.0.1:5000/bucketlists/<id>`
+
+delete a bucketlist
+- `DELETE` - `127.0.0.1:5000/bucketlists/<id>`
+
+get and display a specific bucketlist
+- `GET` - `127.0.0.1:5000/bucketlists/<id>`
+
+add bucketlist item
+- `POST` - `127.0.0.1:5000/bucketlists/<id>/items/`
+
+get a specific bucketlist item
+- `GET` - `127.0.0.1:5000/bucketlists/<id>/items/<id>`
 
 edit and update a bucketlist item
 - `PUT` - `127.0.0.1:5000/bucketlists/<id>/items/<id>`
