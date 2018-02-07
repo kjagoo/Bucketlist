@@ -1,5 +1,5 @@
 # Bucketlist
-flask web service application which manages bucketlists. It always for multiple users where each user can only manage and view his/hers bucketlists. It implements token based authentication to manage security.
+This is a Flask web service application which manages bucketlists. It allows for multiple users to manage and view their personnal bucketlists. It implements token based authentication to manage security.
 
 # Requirements
 - Postgres Database
@@ -61,7 +61,7 @@ delete bucketlist item
 
 **[#Tests](url)**
 
-setup test environment by :
+Setup test environment by :
    - edit in `testmanage.py` `postgresql+psycopg2://[username]:[password]@localhost:5432/testbucketlist`
    - `createdb testbucketlist`
    - `python testmanage.py db init`
