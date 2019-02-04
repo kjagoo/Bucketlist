@@ -6,12 +6,14 @@ from itsdangerous import (TimedJSONWebSignatureSerializer
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 
-from . import db, app
+from . import app
+from .db import db
 
 migrate = Migrate(app, db)
 manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)
+# db = SQLAlchemy()
 
 
 # Create the Post Class

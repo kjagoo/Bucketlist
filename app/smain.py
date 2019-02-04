@@ -3,7 +3,8 @@ from flask_restful import Resource, marshal
 from flask_httpauth import HTTPBasicAuth
 from sqlalchemy.exc import IntegrityError
 from .model import Users, Bucket, BucketListItems
-from . import db, app
+from . import app
+from .db import db
 
 
 auth = HTTPBasicAuth()
